@@ -3,99 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sana Özel Bir Hediye</title>
+    <title>Hediye Sayfası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
     <style>
-        /* Genel Stil */
         body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            background-image: url('file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/fon.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 40px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 20px;
+            width: 90%;
+            gap: 50px;
+        }
+
+        .frame {
+            border: 2px solid #fff;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 300px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .text {
+            max-width: 60%;
+            font-size: 18px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            padding: 20px;
+            width: 90%;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
-        /* Container: İçeriği merkezde tutacak */
-        .container {
-            width: 80%;
-            margin: 20px;
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
         }
 
-        /* Her bir bölümü düzenlemek için Flexbox kullanacağız */
-        .section {
+        .lightbox:target {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 40px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Görsellerin stilini belirleyelim */
-        .section img {
-            width: 45%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        /* Metin kısmını düzenleyelim */
-        .section .content {
-            width: 45%;
-            text-align: left;
-        }
-
-        /* Başlık ve paragrafların stilini ayarlayalım */
-        .section h2 {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .section p {
-            font-size: 1.2rem;
-            color: #666;
-        }
-
-        /* Ses player'ı için stil */
-        .audio-player {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #333;
-            border-radius: 10px;
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             color: white;
+            font-size: 24px;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .lightbox .prev, .lightbox .next {
+            position: absolute;
+            top: 50%;
+            font-size: 30px;
+            color: white;
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            z-index: 100;
+        }
+
+        .lightbox .prev {
+            left: 10px;
+        }
+
+        .lightbox .next {
+            right: 10px;
+        }
+
+        .video-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            width: 90%;
+        }
+
+        .video-gallery video {
+            max-width: 300px;
+            border: 2px solid white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .countdown {
+            margin: 40px 0;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .hidden {
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Arka plan müziği -->
-    <audio autoplay loop>
-        <source src="muzik.mp3" type="audio/mpeg">
-        Tarayıcınız müziği desteklemiyor.
-    </audio>
+    <h1>RUHUMUN EV HALİ</h1>
 
-    <!-- Ana container, tüm içerik burada toplanacak -->
-    <div class="container">
-        <!-- İlk Bölüm: Solda Görsel, Sağda Metin -->
-        <div class="section">
-            <img src="arka-plan.jpg" alt="Görsel">
-            <div class="content">
-                <h2>Bu Senin İçin Hazırlandı!</h2>
-                <p>Bu site sadece senin için tasarlandı. Arka planda sevdiğin müzik, sana özel bir deneyim sunuyor. Hediye vermenin en anlamlı yollarından biri! 🎁</p>
-            </div>
+   <!-- İçerik Blokları -->
+<div class="content">
+    <div class="frame">
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/1.jpg" alt="1.jpg">
+    </div>
+    <div class="text">
+        <p>Seninle her anı paylaşmak, dünya üzerindeki en değerli şey gibi hissediyorum. Gözlerindeki o parıltı, her karanlık anı aydınlatıyor ve seninle her geçen saniye, sanki zamanın ötesinde bir yerde yaşıyor gibi hissediyorum. Birlikte gülüp eğlendiğimizde, hayatın ne kadar güzel olduğunu unutuyorum. Bazen gözlerini öyle bir izliyorum ki, içinde kaybolmak istiyorum. Seninle her şey o kadar basit, o kadar doğal ki, sanki her şeyin yerli yerine oturduğu bir masal dünyasında yaşıyoruz. Seninle olmak, içimdeki tüm boşlukları dolduruyor. Seninle her şey çok daha anlamlı, çok daha değerli. Çünkü seninle her an, sonsuz bir huzur içinde kaybolduğum bir evren gibi.</p>
+    </div>
+</div>
+
+<div class="content">
+    <div class="text">
+        <p>Seninle geçirdiğim her dakika, hayatımın en özel anı haline geliyor. Gözlerinin derinliklerinde kaybolmak, bir ömre bedel gibi. Bazen düşünürken, seninle her anı paylaştığımda hayatın en güzel yanı seninle olmaktan ibaret olduğunu fark ediyorum. Her sözün, kalbimde yankı buluyor, her gülüşün bana dünyayı yeniden keşfetmemi sağlıyor. Seninle birlikteyken zaman, adeta duruyor. Sadece seninle varım, başka hiçbir şeyin önemi yok. Birlikte geleceğe adım atarken, seninle her anı paylaşmak, her yeni günü seninle yaşamak, hayatın en değerli armağanı gibi. Seninle yaşadığım her an, hayatın en anlamlı anı oluyor ve seni sevmenin her anı, bir ömre sığmıyor.</p>
+    </div>
+    <div class="frame">
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/2.jpg" alt="2.jpg">
+    </div>
+</div>
+
+<div class="content">
+    <div class="frame">
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/3.jpg" alt="image-3">
+    </div>
+    <div class="text">
+        <p>Seninle her an, bir başka dünya. Her bakışında, her gülüşünde bir şeyler kayboluyor, ama aynı zamanda her şey yerine oturuyor. Bazen seni izlerken, sanki yıllardır seni bekliyormuşum gibi hissediyorum. Her an seninle olmak, her saniyeyi seninle yaşamak, hayata başka bir bakış açısı kazandırıyor. Çünkü seninle her şey çok farklı, çok özel. Seninle geçen zaman, bir ömre bedelken, ben seni her geçen gün daha fazla seviyorum. Birlikte yaşadığımız her an, kalbimde yeni bir iz bırakıyor. Gözlerine her bakışımda, içinde kaybolduğum o sıcaklık, bana her şeyin ne kadar değerli olduğunu hatırlatıyor. Seninle her şey mümkün, çünkü seninle her an bir masal gibi, gerçek olan en güzel hikaye.</p>
+    </div>
+</div>
+
+<div class="content">
+    <div class="text">
+        <p>Seninle her anı yaşamak, sanki dünyada sadece biz varmışız gibi hissettiriyor. Gözlerine her baktığımda, kalbimde bir huzur dalgası yükseliyor ve içimdeki tüm karanlık kayboluyor. Seninle birlikteyken, hayatın tüm zorlukları küçülüyor, her şey seninle daha kolay ve anlamlı hale geliyor. Birlikte gülüp, birlikte düşündüğümüzde, zamanın nasıl geçtiğini bile anlamıyorum. Senin varlığın, bana her sabah yeni bir umut veriyor, her akşam seninle geçirdiğim anlar, günün en değerli anı oluyor. Seninle olmak, sadece anı yaşamak değil, aynı zamanda her anı seninle bir ömür boyu hatırlamak gibi. Seninle her şey daha güzel, daha parlak; seninle her şeyin bir anlamı var, çünkü seninle kalbim nihayet huzura kavuşuyor.</p>
+    </div>
+    <div class="frame">
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/4.jpg" alt="image-4">
+    </div>
+</div>
+
+
+<section id="ozel-anlar" style="text-align: center; padding: 30px; background-color: rgba(242, 242, 242, 0.8); border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 30px;">
+    <h2 style="font-size: 24px; font-family: 'Arial', sans-serif; color: #333; margin-bottom: 20px;">Özel Anlar Tarihçesi</h2>
+    
+    <div class="timeline" style="display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto;">
+        <div class="event" style="background-color: rgba(255, 87, 34, 0.8); color: white; padding: 15px; margin: 10px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 30%;">
+            <h3 style="font-size: 20px; font-weight: 600;">09 Ağustos 2024</h3>
+            <p style="font-size: 16px;">Tanıştığımız ilk tarih</p>
         </div>
-
-        <!-- İkinci Bölüm: Solda Metin, Sağda Görsel -->
-        <div class="section">
-            <div class="content">
-                <h2>Bir Hediye Daha!</h2>
-                <p>Görselin ve mesajın senin için özenle seçildi. Hediye vermek çok daha anlamlı oldu, değil mi?</p>
-            </div>
-            <img src="arka-plan.jpg" alt="Görsel">
+        <div class="event" style="background-color: rgba(33, 150, 243, 0.8); color: white; padding: 15px; margin: 10px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 30%;">
+            <h3 style="font-size: 20px; font-weight: 600;">10 Ağustos 2024</h3>
+            <p style="font-size: 16px;">Hayatımızın güzelliklerini attığımız an</p>
+        </div>
+        <div class="event" style="background-color: rgba(255, 193, 7, 0.8); color: white; padding: 15px; margin: 10px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 30%;">
+            <h3 style="font-size: 20px; font-weight: 600;">13 Aralık 2024</h3>
+            <p style="font-size: 16px;">Kavuştuğumuz ilk tarih</p>
         </div>
     </div>
+</section>
+
+
+    <!-- Resim Galerisi -->
+    <h2>Resim Galerisi</h2>
+    <div class="gallery">
+        <!-- Galeri Resimleri -->
+        <a href="#lightbox5"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/5.jpg" alt="5.jpg"></a>
+        <a href="#lightbox6"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/6.jpg" alt="6.jpg"></a>
+        <a href="#lightbox7"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/7.jpg" alt="7.jpg"></a>
+        <a href="#lightbox8"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/8.jpg" alt="8.jpg"></a>
+        <a href="#lightbox9"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/9.jpg" alt="9.jpg"></a>
+        <a href="#lightbox10"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/10.jpg" alt="10.jpg"></a>
+        <a href="#lightbox11"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/11.jpg" alt="11.jpg"></a>
+        <a href="#lightbox12"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/12.jpg" alt="12.jpg"></a>
+        <a href="#lightbox13"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/13.jpg" alt="13.jpg"></a>
+        <a href="#lightbox14"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/14.jpg" alt="14.jpg"></a>
+        <a href="#lightbox15"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/15.jpg" alt="15.jpg"></a>
+        <a href="#lightbox16"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/16.jpg" alt="16.jpg"></a>
+        <a href="#lightbox17"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/17.jpg" alt="17.jpg"></a>
+        <a href="#lightbox18"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/18.jpg" alt="18.jpg"></a>
+        <a href="#lightbox19"><img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/19.jpg" alt="19.jpg"></a>
+    </div>
+
+    <!-- Lightbox'lar -->
+    <div id="lightbox5" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox19" class="prev">&#10094;</a>
+        <a href="#lightbox6" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/5.jpg" alt="5.jpg">
+    </div>
+
+    <div id="lightbox6" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox5" class="prev">&#10094;</a>
+        <a href="#lightbox7" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/6.jpg" alt="6.jpg">
+    </div>
+
+    <div id="lightbox7" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox6" class="prev">&#10094;</a>
+        <a href="#lightbox8" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/7.jpg" alt="7.jpg">
+    </div>
+
+    <div id="lightbox8" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox7" class="prev">&#10094;</a>
+        <a href="#lightbox9" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/8.jpg" alt="8.jpg">
+    </div>
+
+    <div id="lightbox9" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox8" class="prev">&#10094;</a>
+        <a href="#lightbox10" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/9.jpg" alt="9.jpg">
+    </div>
+
+    <div id="lightbox10" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox9" class="prev">&#10094;</a>
+        <a href="#lightbox11" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/10.jpg" alt="10.jpg">
+    </div>
+
+    <div id="lightbox11" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox10" class="prev">&#10094;</a>
+        <a href="#lightbox12" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/11.jpg" alt="11.jpg">
+    </div>
+
+    <div id="lightbox12" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox11" class="prev">&#10094;</a>
+        <a href="#lightbox13" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/12.jpg" alt="12.jpg">
+    </div>
+
+    <div id="lightbox13" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox12" class="prev">&#10094;</a>
+        <a href="#lightbox14" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/13.jpg" alt="13.jpg">
+    </div>
+
+    <div id="lightbox14" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox13" class="prev">&#10094;</a>
+        <a href="#lightbox15" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/14.jpg" alt="14.jpg">
+    </div>
+
+    <div id="lightbox15" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox14" class="prev">&#10094;</a>
+        <a href="#lightbox16" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/15.jpg" alt="15.jpg">
+    </div>
+
+    <div id="lightbox16" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox15" class="prev">&#10094;</a>
+        <a href="#lightbox17" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/16.jpg" alt="16.jpg">
+    </div>
+
+    <div id="lightbox17" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox16" class="prev">&#10094;</a>
+        <a href="#lightbox18" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/17.jpg" alt="17.jpg">
+    </div>
+
+    <div id="lightbox18" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox17" class="prev">&#10094;</a>
+        <a href="#lightbox19" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/18.jpg" alt="18.jpg">
+    </div>
+
+    <div id="lightbox19" class="lightbox">
+        <a href="#" class="close">&times;</a>
+        <a href="#lightbox18" class="prev">&#10094;</a>
+        <a href="#lightbox5" class="next">&#10095;</a>
+        <img src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/19.jpg" alt="19.jpg">
+    </div>
+
+    <!-- Video Galerisi -->
+    <h2>Video Galerisi</h2>
+    <div class="video-gallery">
+        <video controls>
+            <source src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls>
+            <source src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls>
+            <source src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls>
+            <source src="file:///C:/Users/MALAT/OneDrive/Masaüstü/Hediye/4.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+<section id="geri-sayim" style="text-align: center; padding: 30px; background-color: rgba(242, 242, 242, 0.8); border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 30px;">
+    <h2 style="font-size: 24px; font-family: 'Arial', sans-serif; color: #333; margin-bottom: 20px;">Geri Sayım: 10.08.2025</h2>
+    <div id="sayim" style="display: flex; justify-content: center; gap: 20px;">
+        <div class="time" id="days" style="background-color: rgba(76, 175, 80, 0.8); padding: 20px; border-radius: 8px; color: white; font-size: 24px; text-align: center; width: 80px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <span class="number" style="font-size: 40px; font-weight: bold;">0</span>
+            <span class="label" style="font-size: 16px; text-transform: uppercase; font-weight: 600;">Gün</span>
+        </div>
+        <div class="time" id="hours" style="background-color: rgba(76, 175, 80, 0.8); padding: 20px; border-radius: 8px; color: white; font-size: 24px; text-align: center; width: 80px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <span class="number" style="font-size: 40px; font-weight: bold;">0</span>
+            <span class="label" style="font-size: 16px; text-transform: uppercase; font-weight: 600;">Saat</span>
+        </div>
+        <div class="time" id="minutes" style="background-color: rgba(76, 175, 80, 0.8); padding: 20px; border-radius: 8px; color: white; font-size: 24px; text-align: center; width: 80px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <span class="number" style="font-size: 40px; font-weight: bold;">0</span>
+            <span class="label" style="font-size: 16px; text-transform: uppercase; font-weight: 600;">Dakika</span>
+        </div>
+        <div class="time" id="seconds" style="background-color: rgba(76, 175, 80, 0.8); padding: 20px; border-radius: 8px; color: white; font-size: 24px; text-align: center; width: 80px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <span class="number" style="font-size: 40px; font-weight: bold;">0</span>
+            <span class="label" style="font-size: 16px; text-transform: uppercase; font-weight: 600;">Saniye</span>
+        </div>
+    </div>
+</section>
+
+<script>
+    var countDownDate = new Date("Aug 10, 2025 00:00:00").getTime();
+
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").getElementsByClassName("number")[0].innerHTML = days;
+        document.getElementById("hours").getElementsByClassName("number")[0].innerHTML = hours;
+        document.getElementById("minutes").getElementsByClassName("number")[0].innerHTML = minutes;
+        document.getElementById("seconds").getElementsByClassName("number")[0].innerHTML = seconds;
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("sayim").innerHTML = "<span style='color: red; font-size: 24px;'>Süresi Dolmuş</span>";
+        }
+    }, 1000);
+</script>
+
+
 </body>
 </html>
